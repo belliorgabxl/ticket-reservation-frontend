@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Optimistic route protection only: this just checks for the presence of
-// the non-httpOnly `auth_status` cookie set by the Go backend on
-// login/register (see pkg/auth/cookies.go on the backend). It cannot verify
-// or decode the actual JWTs — the backend independently enforces auth on
-// every protected API call, which is the real security boundary. This is
-// purely a UX shortcut so signed-out users get redirected before rendering
-// a page that would just fail its data fetch.
 const PROTECTED_PREFIXES = [
   "/show-times",
   "/reservations",
