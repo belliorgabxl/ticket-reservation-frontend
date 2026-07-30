@@ -2,7 +2,6 @@ import { API_BASE_URL } from "./base";
 import type { Reservation } from "@/types/reservation";
 
 export async function createReservation(payload: {
-  userId: string;
   showTimeId: string;
   seatIds: string[];
 }) {
@@ -11,6 +10,7 @@ export async function createReservation(payload: {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(payload),
     cache: "no-store",
   });
@@ -28,6 +28,7 @@ export async function getReservationById(
   reservationId: string,
 ): Promise<Reservation> {
   const res = await fetch(`${API_BASE_URL}/reservations/${reservationId}`, {
+    credentials: "include",
     cache: "no-store",
   });
 

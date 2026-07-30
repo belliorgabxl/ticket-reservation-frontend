@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "./base";
 
 export type HoldSeatsPayload = {
-  userId: string;
   showTimeId: string;
   seatIds: string[];
 };
@@ -13,6 +12,8 @@ export type HoldSeatsResponse = {
   isPartial?: boolean;
 };
 
+// userId is never sent from the client — the backend derives it from the
+// authenticated session cookie (see RequireAuth on the Go side).
 export async function holdSeats(
   payload: HoldSeatsPayload,
 ): Promise<HoldSeatsResponse> {
@@ -21,6 +22,7 @@ export async function holdSeats(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(payload),
     cache: "no-store",
   });
@@ -35,11 +37,12 @@ export async function holdSeats(
 }
 
 export async function releaseSeats(payload: HoldSeatsPayload): Promise<void> {
-  const res = await fetch(`${API_BASE_URL}/holds/seats`, {
-    method: "DELETE",
+  const res = await fetch(`${API_BASE_URL}/holds/seats/release`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(payload),
     cache: "no-store",
   });
