@@ -287,6 +287,17 @@ export default function SeatsPage() {
               >
                 {creating ? "Creating..." : "2. Continue to Reservation"}
               </Button>
+
+              {heldSeatIds.length > 0 ? (
+                <Button
+                  variant="ghost"
+                  onClick={onReleaseSeats}
+                  disabled={releasing}
+                  className="text-danger hover:bg-danger/10"
+                >
+                  {releasing ? "Releasing..." : "Release hold"}
+                </Button>
+              ) : null}
             </div>
           </Card>
         </div>
